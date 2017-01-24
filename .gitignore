@@ -1,0 +1,17 @@
+*.iml
+*.idea
+.get/
+.idea/
+.DS_Store
+*.class
+target/
+.AppleDouble
+.LSOverride
+Icon
+node_modules/
+.settings/
+.project
+logs/
+.classpath
+soa-backup/
+
