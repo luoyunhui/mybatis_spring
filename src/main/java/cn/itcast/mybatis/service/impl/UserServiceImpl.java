@@ -3,15 +3,20 @@ package cn.itcast.mybatis.service.impl;
 import cn.itcast.mybatis.dao.IUserDao;
 import cn.itcast.mybatis.domain.User;
 import cn.itcast.mybatis.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service("userService")
 public class UserServiceImpl implements IUserService {
 
+    @Autowired
     private IUserDao userDao;
+
     public int deleteUserById(String id) {
         int i = userDao.deleteUserById(id);
-//        int c = 1 / 0;
+        int c = 1 / 0;
         return i;
     }
 

@@ -13,10 +13,11 @@
 				         http://www.springframework.org/schema/aop
 				         http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
+    <context:component-scan base-package="cn.itcast.mybatis"/>
     <!-- 配置数据源 -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql:///mybatis" />
+        <property name="url" value="jdbc:mysql://localhost/mybatis" />
         <property name="username" value="root" />
         <property name="password" value="root" />
     </bean>
@@ -24,9 +25,12 @@
     <bean id="sf" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:sqlMapConfig.xml"/>
-        <property name="mapperLocations">
-            <value>classpath:user.xml</value>
-        </property>
+        <property name="mapperLocations" value="classpath*:mapping/*.xml"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.itcast.mybatis.dao" />
+        <property name="sqlSessionFactoryBeanName" value="sf"/>
     </bean>
 
     <!-- ================================事务相关控制=================================================    -->
@@ -51,11 +55,6 @@
         <aop:advisor pointcut-ref="pc" advice-ref="userTxAdvice" />
     </aop:config>
 
-    <bean id="userDao" class="cn.itcast.mybatis.dao.impl.UserDaoImpl">
-        <property name="sqlSessionFactory" ref="sf"></property>
-    </bean>
 
-    <bean id="userService" class="cn.itcast.mybatis.service.impl.UserServiceImpl">
-        <property name="userDao" ref="userDao"></property>
-    </bean>
+
 </beans>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.itcast.mybatis.domain.User">
+<mapper namespace="cn.itcast.mybatis.dao.IUserDao">
 
     <resultMap type="User" id="userMap">
         <id column="id" property="id"/>
@@ -15,12 +15,12 @@
 
     <!-- 根据id查询User -->
     <!-- id:当前sql语句的唯一标示  parameterType：参数类型 resultType:结果类型(返回值类型)-->
-    <select id="selectUserById" parameterType="string" resultMap="userMap">
+    <select id="findUserById" parameterType="string" resultMap="userMap">
         select <include refid="mysql"/> from user where id = #{userid}
     </select>
 
     <!-- 查询所有User -->
-    <select id="selectAllUsers" resultType="User">
+    <select id="findAllUser" resultType="User">
         select id,name as userName ,address from user
     </select>
 
@@ -30,7 +30,7 @@
     </select>
 
     <!-- 动态sql -->
-    <select id="selectUserByCondition" parameterType="User" resultType="User">
+    <select id="findUserByCondition" parameterType="User" resultType="User">
         select id,name as userName ,address from user where 1=1
         <if test="id != null">
             and id = #{id}
@@ -62,7 +62,7 @@
     </select>
 
     <!-- 插入User -->
-    <insert id="insertUser" parameterType="User">
+    <insert id="saveUser" parameterType="User">
         insert into user (id,name,address) values (#{id},#{userName},#{address});
     </insert>
 
@@ -82,7 +82,7 @@
     </update>
 
     <!-- 动态更新user -->
-    <update id="updateUserByCondition" parameterType="User">
+    <update id="updateUser" parameterType="User">
         update user
         <set>
             <if test="userName != null">
